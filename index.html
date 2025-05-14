@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Conexión a Google Fonts corregida -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jacquard+24&display=swap" rel="stylesheet">
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Carlos Cara</title>
     <style>
-        /* FUENTE JACQUARD 24 CON FALLBACK CONTROLADO */
+        /* FUENTE PRINCIPAL CON FALLBACK CONTROLADO */
         @font-face {
             font-family: 'Jacquard-Fallback';
             src: local('Georgia'), local('Times New Roman'), local('serif');
         }
-        
-        .nombre-web, 
-        .nombre-movil,
-        .pantalla-inicio span:first-child {
+
+        .nombre-web,
+        .pantalla-inicio span:first-child,
+        .nombre-movil { /* RE-INCLUIMOS .nombre-movil AQUÍ */
             font-family: 'Jacquard 24', 'Jacquard-Fallback', serif;
             font-weight: normal;
             font-style: normal;
@@ -32,8 +31,12 @@
         body {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%230600F5" opacity="0.7" filter="url(%23blur)"/><defs><filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2"/></filter></defs></svg>') 12 12, auto;
             font-family: Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
 
+        /* PANTALLA DE INICIO */
         .pantalla-inicio {
             position: fixed;
             top: 0;
@@ -65,6 +68,7 @@
             100% { opacity: 0; visibility: hidden; }
         }
 
+        /* VERSIÓN ESCRITORIO */
         .web {
             display: none;
             width: 100%;
@@ -97,12 +101,7 @@
             pointer-events: none;
         }
 
-        @keyframes moverDegradado {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        /* BOTONES ESCRITORIO */
         .boton-web {
             position: fixed;
             z-index: 10;
@@ -121,14 +120,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: Helvetica, sans-serif; /* MANTENEMOS HELVETICA COMO BASE PARA OTROS BOTONES */
         }
 
         .nombre-web {
-            font-size: 2rem;
+            font-family: 'Jacquard 24', 'Jacquard-Fallback', serif !important; /* FORZAMOS JACQUARD EN EL NOMBRE WEB */
+            font-size: 2.5rem;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
-        .cine-web, .diseno-web, .fotografia-web {
-            font-family: Helvetica, sans-serif;
+        .cine-web {
+            bottom: 10%;
+            right: 10%;
+        }
+
+        .diseno-web {
+            top: 10%;
+            right: 10%;
+        }
+
+        .fotografia-web {
+            top: 10%;
+            left: 10%;
         }
 
         .boton-web:active {
@@ -160,27 +175,7 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-        .cine-web {
-            bottom: 10%;
-            right: 10%;
-        }
-
-        .diseno-web {
-            top: 10%;
-            right: 10%;
-        }
-
-        .nombre-web {
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .fotografia-web {
-            top: 10%;
-            left: 10%;
-        }
-
+        /* VERSIÓN MÓVIL - CORREGIDA */
         .movil {
             display: block;
             width: 100%;
@@ -213,6 +208,7 @@
             pointer-events: none;
         }
 
+        /* BOTONES MÓVIL - VERSIÓN CORREGIDA */
         .boton-movil {
             position: fixed;
             z-index: 10;
@@ -227,16 +223,21 @@
             transition: transform 0.2s;
             text-transform: uppercase;
             cursor: pointer;
-            font-family: Helvetica, sans-serif;
+            font-family: Helvetica, sans-serif; /* MANTENEMOS HELVETICA COMO BASE PARA OTROS BOTONES MÓVILES */
         }
 
+        /* ESTILO ESPECÍFICO PARA EL BOTÓN DEL NOMBRE EN MÓVIL */
         .nombre-movil {
-            font-size: 1.8rem;
+            font-family: 'Jacquard 24', 'Jacquard-Fallback', serif !important; /* FORZAMOS JACQUARD EN EL NOMBRE MÓVIL */
+            font-size: 2rem;
             padding: 16px 28px;
-        }
-
-        .boton-movil:active {
-            transform: scale(0.95);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            letter-spacing: 1px;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .cine-movil {
@@ -256,17 +257,12 @@
             left: 4%;
         }
 
-        .nombre-movil {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
         .relleno {
             width: 100%;
             height: 150vh;
         }
 
+        /* VISOR PDF */
         .pdf-viewer {
             display: none;
             position: fixed;
@@ -295,6 +291,14 @@
             cursor: pointer;
         }
 
+        /* ANIMACIONES */
+        @keyframes moverDegradado {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* MEDIA QUERIES */
         @media (min-width: 768px) {
             .movil {
                 display: none !important;
@@ -357,6 +361,7 @@
             const pdfFrame = document.getElementById('pdfFrame');
             pdfFrame.src = pdfPath;
             pdfViewer.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
 
         // Función para cerrar el visor de PDF
@@ -365,10 +370,12 @@
             const pdfFrame = document.getElementById('pdfFrame');
             pdfFrame.src = '';
             pdfViewer.style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
 
         // Verificación mejorada de fuentes
         function verificarFuentes() {
+            // Verificamos si la fuente Jacquard 24 está disponible
             const testElement = document.createElement('span');
             testElement.style.fontFamily = 'Jacquard 24';
             testElement.style.fontSize = '48px';
@@ -376,18 +383,24 @@
             testElement.style.visibility = 'hidden';
             testElement.textContent = 'Test';
             document.body.appendChild(testElement);
-            
+
             setTimeout(() => {
                 const defaultWidth = testElement.offsetWidth;
                 testElement.style.fontFamily = 'monospace';
                 const monospaceWidth = testElement.offsetWidth;
-                
+
                 if (defaultWidth === monospaceWidth) {
-                    console.warn('Jacquard 24 no cargada - Usando fallback');
-                    document.querySelectorAll('.nombre-web, .nombre-movil, .pantalla-inicio span:first-child').forEach(el => {
+                    console.warn('Jacquard 24 no cargada - Aplicando fallback');
+                    document.querySelectorAll('.nombre-web, .nombre-movil, .pantalla-inicio span:first-child').forEach
+					(el => {
                         el.style.fontFamily = '"Jacquard-Fallback", serif';
                     });
+                } else {
+                    console.log('Jacquard 24 cargada correctamente');
+                    // Forzar aplicación en móvil por si acaso
+                    document.querySelector('.nombre-movil').style.fontFamily = '"Jacquard 24", "Jacquard-Fallback", serif';
                 }
+
                 document.body.removeChild(testElement);
             }, 100);
         }
@@ -395,7 +408,7 @@
         // Animación del degradado para versión móvil
         document.addEventListener('DOMContentLoaded', function() {
             verificarFuentes();
-            
+
             const degradadoMovil = document.querySelector('.degradado-animado');
             let lastScroll = 0;
 
