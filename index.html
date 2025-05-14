@@ -9,13 +9,15 @@
    <style>
     /* Coloca esto AL INICIO de tu etiqueta <style> */
     @font-face {
-        font-family: 'Ancient Medium';
-        src: url('./fonts/AncientMedium.woff2') format('woff2'),
-             url('./fonts/AncientMedium.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap; /* Importante para móviles */
-    }
+    font-family: 'Ancient Medium';
+    src: local('Ancient Medium'), /* Primero intenta local */
+         url('./fonts/AncientMedium.woff2') format('woff2'),
+         url('./fonts/AncientMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block; /* Cambia a block para evitar flash de fuentes */
+    unicode-range: U+000-5FF; /* Solo carga los glifos necesarios */
+}
     
 
 
@@ -406,5 +408,11 @@
             });
         });
     </script>
+	// Añade esto al final de tu body para diagnosticar
+<script>
+document.fonts.ready.then(() => {
+    console.log('Fuentes cargadas:', document.fonts.check('1em "Ancient Medium"'));
+});
+</script>
 </body>
 </html>
