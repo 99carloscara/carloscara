@@ -15,10 +15,11 @@
             src: local('Georgia'), local('Times New Roman'), local('serif');
         }
 
+        /* APLICACIÓN DE JACQUARD 24 */
         .nombre-web,
         .pantalla-inicio span:first-child,
-        .nombre-movil { /* RE-INCLUIMOS .nombre-movil AQUÍ */
-            font-family: 'Jacquard 24', 'Jacquard-Fallback', serif;
+        .nombre-movil {
+            font-family: 'Jacquard 24', 'Jacquard-Fallback', serif !important;
             font-weight: normal;
             font-style: normal;
             letter-spacing: 1px;
@@ -54,6 +55,10 @@
             text-align: center;
             animation: fundido 3s ease-in-out forwards;
             text-transform: uppercase;
+        }
+
+        .pantalla-inicio span:first-child {
+            font-family: 'Jacquard 24', 'Jacquard-Fallback', serif !important;
         }
 
         .pantalla-inicio span:last-child {
@@ -120,11 +125,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: Helvetica, sans-serif; /* MANTENEMOS HELVETICA COMO BASE PARA OTROS BOTONES */
+            font-family: Helvetica, sans-serif;
         }
 
         .nombre-web {
-            font-family: 'Jacquard 24', 'Jacquard-Fallback', serif !important; /* FORZAMOS JACQUARD EN EL NOMBRE WEB */
+            font-family: 'Jacquard 24', 'Jacquard-Fallback', serif !important;
             font-size: 2.5rem;
             top: 60%;
             left: 50%;
@@ -175,7 +180,7 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-        /* VERSIÓN MÓVIL - CORREGIDA */
+        /* VERSIÓN MÓVIL */
         .movil {
             display: block;
             width: 100%;
@@ -208,7 +213,7 @@
             pointer-events: none;
         }
 
-        /* BOTONES MÓVIL - VERSIÓN CORREGIDA */
+        /* BOTONES MÓVIL */
         .boton-movil {
             position: fixed;
             z-index: 10;
@@ -223,12 +228,11 @@
             transition: transform 0.2s;
             text-transform: uppercase;
             cursor: pointer;
-            font-family: Helvetica, sans-serif; /* MANTENEMOS HELVETICA COMO BASE PARA OTROS BOTONES MÓVILES */
+            font-family: Helvetica, sans-serif;
         }
 
-        /* ESTILO ESPECÍFICO PARA EL BOTÓN DEL NOMBRE EN MÓVIL */
         .nombre-movil {
-            font-family: 'Jacquard 24', 'Jacquard-Fallback', serif !important; /* FORZAMOS JACQUARD EN EL NOMBRE MÓVIL */
+            font-family: 'Jacquard 24', 'Jacquard-Fallback', serif !important;
             font-size: 2rem;
             padding: 16px 28px;
             top: 50%;
@@ -253,7 +257,7 @@
         }
 
         .fotografia-movil {
-            bottom: 5%;
+            bottom: 7%;
             left: 4%;
         }
 
@@ -328,7 +332,7 @@
             <span>FOTOGRAFÍA</span>
             <img src="foto-ilustracion.png" alt="Fotografía">
         </button>
-        <button class="boton-web diseno-web" onclick="window.open('https://www.flipsnack.com/fanzinecatalogue/portfolio-carlos-cara/full-view.html', '_blank')">
+        <button class="boton-web diseno-web" onclick="openPDF('portfoliodiseno.pdf')">
             <span>DISEÑO GRÁFICO</span>
             <img src="diseno-ilustracion.png" alt="Diseño Gráfico">
         </button>
@@ -347,9 +351,9 @@
         <div class="degradado-animado"></div>
 
         <button class="boton-movil diseno-movil" onclick="window.open('https://www.flipsnack.com/fanzinecatalogue/portfolio-carlos-cara/full-view.html', '_blank')">DISEÑO GRÁFICO</button>
+        <button class="boton-movil fotografia-movil" onclick="window.open('https://www.flipsnack.com/fanzinecatalogue/portfolio-fotograf-a/full-view.html', '_blank')">FOTOGRAFÍA</button>
         <button class="boton-movil cine-movil" onclick="window.location.href='cine.html'">CINE</button>
         <button class="boton-movil nombre-movil" onclick="window.location.href='carloscara.html'">CARLOS CARA</button>
-        <button class="boton-movil fotografia-movil" onclick="openPDF('portfoliofotografias.pdf')">FOTOGRAFÍA</button>
 
         <div class="relleno"></div>
     </div>
@@ -364,7 +368,7 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Función para cerrar el visor de PDF
+        // Función para cerrar el visor
         function closePDF() {
             const pdfViewer = document.getElementById('pdfViewer');
             const pdfFrame = document.getElementById('pdfFrame');
@@ -373,9 +377,8 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Verificación mejorada de fuentes
+        // Verificación de fuentes
         function verificarFuentes() {
-            // Verificamos si la fuente Jacquard 24 está disponible
             const testElement = document.createElement('span');
             testElement.style.fontFamily = 'Jacquard 24';
             testElement.style.fontSize = '48px';
@@ -391,13 +394,11 @@
 
                 if (defaultWidth === monospaceWidth) {
                     console.warn('Jacquard 24 no cargada - Aplicando fallback');
-                    document.querySelectorAll('.nombre-web, .nombre-movil, .pantalla-inicio span:first-child').forEach
-					(el => {
+                    document.querySelectorAll('.nombre-web, .nombre-movil, .pantalla-inicio span:first-child').forEach(el => {
                         el.style.fontFamily = '"Jacquard-Fallback", serif';
                     });
                 } else {
                     console.log('Jacquard 24 cargada correctamente');
-                    // Forzar aplicación en móvil por si acaso
                     document.querySelector('.nombre-movil').style.fontFamily = '"Jacquard 24", "Jacquard-Fallback", serif';
                 }
 

@@ -10,28 +10,32 @@
             padding: 0;
             font-family: 'Helvetica', sans-serif;
             background-color: #000;
-            overflow: hidden;
-            touch-action: manipulation;
+            overflow-x: hidden;
+            touch-action: pan-y;
+            height: 100vh;
+            width: 100vw;
         }
 
         .container {
             position: relative;
             width: 100vw;
-            height: 100vh;
-            overflow: hidden;
+            height: 150vh; /* Altura mayor que la pantalla para permitir scroll */
+            overflow-x: hidden;
         }
 
         .background {
+            position: fixed;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            z-index: -1;
         }
 
         /* PORTADAS PARA MÓVIL */
         .link {
             position: absolute;
-            width: 28vw;  /* Tamaño proporcional al ancho de pantalla */
-            height: 42vw;  /* Relación 2:3 */
+            width: 28vw;
+            height: 42vw;
             transition: all 0.3s ease;
             z-index: 10;
             box-shadow: 0 0 2px 1px rgba(0, 102, 255, 0.7);
@@ -52,19 +56,19 @@
         }
 
         /* DISTRIBUCIÓN PARA MÓVIL */
-        .amor        { top: 3%; left: 3%; }
-        .puerta      { top: 3%; right: 3%; }
+        .amor        { top: 5vh; left: 5vw; }
+        .puerta      { top: 5vh; right: 5vw; }
         .apariencia  { 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%);
-            width: 30vw;  /* Centro ligeramente más grande */
+            top: 35vh; 
+            left: 50vw; 
+            transform: translateX(-50%);
+            width: 30vw;
             height: 45vw;
         }
-        .no-salgo    { bottom: 3%; left: 3%; }
-        .billete     { bottom: 3%; right: 3%; }
+        .no-salgo    { top: 75vh; left: 5vw; }
+        .billete     { top: 75vh; right: 5vw; }
 
-        /* INDICADOR TÁCTIL (reemplaza al cursor) */
+        /* INDICADOR TÁCTIL */
         .touch-indicator {
             display: none;
             position: absolute;
@@ -84,16 +88,29 @@
             100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.6; }
         }
 
-        /* VERSIÓN ESCRITORIO (solo si es necesario) */
+        /* VERSIÓN ESCRITORIO */
         @media (min-width: 769px) {
+            .container {
+                height: 100vh;
+            }
+            
             .link {
                 width: 220px;
                 height: 330px;
             }
+            
             .apariencia {
                 width: 240px;
                 height: 360px;
+                top: 50%;
+                transform: translate(-50%, -50%);
             }
+            
+            .amor { top: 20%; left: 10%; }
+            .puerta { top: 20%; right: 10%; }
+            .no-salgo { bottom: 10%; left: 10%; }
+            .billete { bottom: 10%; right: 10%; }
+            
             body {
                 cursor: none;
             }
@@ -126,18 +143,17 @@
 
     <script>
         // Adaptación táctil
-        if (window.innerWidth <= 768) {
+        if ('ontouchstart' in window || navigator.maxTouchPoints) {
             document.querySelectorAll('.link').forEach(link => {
                 link.addEventListener('touchstart', function(e) {
+                    const touch = e.touches[0];
                     const indicator = document.querySelector('.touch-indicator');
-                    indicator.style.display = 'block';
-                    indicator.style.left = `${e.touches[0].clientX}px`;
-                    indicator.style.top = `${e.touches[0].clientY}px`;
                     
-                    // Feedback táctil en dispositivos que lo soportan
-                    if (window.navigator.vibrate) {
-                        window.navigator.vibrate(10);
-                    }
+                    indicator.style.display = 'block';
+                    indicator.style.left = `${touch.clientX}px`;
+                    indicator.style.top = `${touch.clientY}px`;
+                    
+                    if (navigator.vibrate) navigator.vibrate(10);
                 });
                 
                 link.addEventListener('touchend', function() {
@@ -145,23 +161,27 @@
                 });
             });
             
-            // Prevenir zoom con doble toque
-            document.addEventListener('dblclick', function(e) {
+            // Bloquear zoom pero permitir scroll
+            document.addEventListener('gesturestart', function(e) {
                 e.preventDefault();
             }, { passive: false });
         } else {
-            // Versión desktop con cursor personalizado
-            const cursor = document.createElement('div');
-            cursor.className = 'cursor';
-            document.body.appendChild(cursor);
-            
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = `${e.clientX}px`;
-                cursor.style.top = `${e.clientY}px`;
-            });
-            
+            // Versión desktop
             document.querySelector('.touch-indicator').remove();
         }
+        
+        // Ajustar altura del contenedor en móvil
+        function adjustContainerHeight() {
+            const container = document.querySelector('.container');
+            if (window.innerWidth <= 768) {
+                container.style.height = '150vh'; // Altura suficiente para ver las últimas dos portadas
+            } else {
+                container.style.height = '100vh';
+            }
+        }
+        
+        window.addEventListener('resize', adjustContainerHeight);
+        adjustContainerHeight();
     </script>
 </body>
 </html>
