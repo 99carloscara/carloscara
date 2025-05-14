@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carlos Cara</title>
     <style>
-        @font-face {
-            font-family: 'Ancient Medium';
-            src: url('https://99carloscara.github.io/portfolio/AncientMedium.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
+        src: url('/carloscara/fonts/AncientMedium.woff2') format('woff2');
+		@font-face {
+  font-family: 'Ancient Medium';
+  src: url('/carloscara/Ancient%20Medium.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 
         /* ESTILO DEL CURSOR PERSONALIZADO */
         body {
@@ -304,7 +306,6 @@
         <span>PORTFOLIO</span>
     </div>
 
-    <!-- PDF Viewer (hidden by default) -->
     <div class="pdf-viewer" id="pdfViewer">
         <span class="close-pdf" onclick="closePDF()">×</span>
         <iframe id="pdfFrame" src=""></iframe>
@@ -365,22 +366,22 @@
         document.addEventListener('DOMContentLoaded', function() {
             const degradadoMovil = document.querySelector('.degradado-animado');
             let lastScroll = 0;
-            
+
             function moverDegradado() {
                 const scrollY = window.scrollY || window.pageYOffset;
                 const velocidad = 0.3;
-                
+
                 const posX = 50 + (scrollY * velocidad);
                 const posY = 50 + (scrollY * velocidad * 0.5);
-                
+
                 if(degradadoMovil) {
                     degradadoMovil.style.backgroundPosition = `${posX}% ${posY}%`;
                 }
-                
+
                 lastScroll = scrollY;
                 requestAnimationFrame(moverDegradado);
             }
-            
+
             setTimeout(() => {
                 moverDegradado();
             }, 3000);
@@ -388,6 +389,11 @@
             // Verificar si la fuente está cargada
             document.fonts.load('1em "Ancient Medium"').then(() => {
                 console.log('Fuente Ancient Medium cargada correctamente');
+                // Aplicar la fuente a los elementos móviles después de la carga
+                const nombreMovil = document.querySelector('.nombre-movil');
+                if (nombreMovil) {
+                    nombreMovil.style.fontFamily = "'Ancient Medium', serif";
+                }
             }).catch(err => {
                 console.error('Error cargando la fuente Ancient Medium:', err);
             });
