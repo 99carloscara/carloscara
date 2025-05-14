@@ -33,7 +33,7 @@
 
         .section1 {
             height: 100vh;
-            background-image: url('carloscara1.png'); /* Imagen por defecto (web/portatik) */
+            background-image: url('carloscara1.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -48,16 +48,34 @@
         }
 
         .section2 img {
-            max-width: 25%; /* Tamaño reducido para web/portatik */
+            max-width: 25%;
             height: auto;
         }
 
+        /* SECCIÓN DE VIDEO MODIFICADA */
         .video-section {
             background-color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 120vh; /* Altura aumentada */
+            padding: 5vh 0; /* Espaciado vertical */
+        }
+
+        .video-container {
+            width: 80%;
+            max-width: 1200px;
+            height: 0;
+            padding-bottom: 56.25%; /* Relación 16:9 */
+            position: relative;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
         .contact {
@@ -112,16 +130,20 @@
         /* === VERSIÓN MÓVIL === */
         @media (max-width: 768px) {
             .section1 {
-                background-image: url('carloscaravertical.png'); /* Imagen móvil */
+                background-image: url('carloscaravertical.png');
             }
 
             .section2 {
-                display: none; /* Eliminar sección 2 en móvil */
+                display: none;
             }
 
-            .video-section iframe {
-                width: 100%;
-                height: auto;
+            .video-section {
+                min-height: 80vh; /* Altura ajustada para móvil */
+                padding: 3vh 0;
+            }
+
+            .video-container {
+                width: 95%;
             }
 
             .contact {
@@ -139,15 +161,18 @@
             }
         }
 
-        /* === VERSIÓN "PORTATIK" (Pantallas medianas) === */
+        /* === VERSIÓN "PORTATIK" === */
         @media (min-width: 769px) and (max-width: 1024px) {
             .section2 img {
-                max-width: 30%; /* Ajuste para pantallas medianas si es necesario */
+                max-width: 30%;
             }
 
-            .video-section iframe {
-                width: 70%; /* Ajuste para pantallas medianas si es necesario */
-                height: auto;
+            .video-section {
+                min-height: 100vh;
+            }
+
+            .video-container {
+                width: 90%;
             }
         }
     </style>
@@ -161,12 +186,13 @@
     </div>
 
     <div class="video-section">
-        <iframe width="800" height="450"
-            src="https://www.youtube.com/embed/3P_bNatzeTg"
-            title="Video Carlos Cara"
-            frameborder="0"
-            allowfullscreen>
-        </iframe>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/3P_bNatzeTg"
+                    title="Video Carlos Cara"
+                    frameborder="0"
+                    allowfullscreen>
+            </iframe>
+        </div>
     </div>
 
     <div class="contact" id="contact">
