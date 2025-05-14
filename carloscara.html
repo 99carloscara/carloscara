@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlos Cara</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Helvetica, sans-serif;
+            scroll-behavior: smooth;
+            background-color: #000;
+            color: white;
+            cursor: none !important;
+        }
+
+        .section {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .section1 {
+            height: 100vh;
+            background-image: url('carloscara1.png'); /* Imagen por defecto (web/portatik) */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .section2 {
+            background-color: #0600F5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .section2 img {
+            max-width: 25%; /* Tamaño reducido para web/portatik */
+            height: auto;
+        }
+
+        .video-section {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .contact {
+            background-color: #00f;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(60px);
+            filter: blur(10px);
+            transition: opacity 1s ease, transform 1s ease, filter 1s ease;
+        }
+
+        .contact.visible {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .contact p, .contact a {
+            margin: 10px;
+            font-size: 1.4rem;
+            color: white;
+            text-decoration: none;
+            cursor: none !important;
+        }
+
+        .contact a:hover {
+            text-decoration: underline;
+        }
+
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(0, 102, 255, 1) 30%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease;
+            z-index: 9999;
+        }
+
+        .cursor-hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            background: radial-gradient(circle, rgba(0, 102, 255, 1) 50%, rgba(255, 255, 255, 0) 80%);
+        }
+
+        /* === VERSIÓN MÓVIL === */
+        @media (max-width: 768px) {
+            .section1 {
+                background-image: url('carloscaravertical.png'); /* Imagen móvil */
+            }
+
+            .section2 {
+                display: none; /* Eliminar sección 2 en móvil */
+            }
+
+            .video-section iframe {
+                width: 100%;
+                height: auto;
+            }
+
+            .contact {
+                height: auto;
+                padding: 20px;
+            }
+
+            .contact p, .contact a {
+                font-size: 1.2rem;
+            }
+
+            .cursor {
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        /* === VERSIÓN "PORTATIK" (Pantallas medianas) === */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .section2 img {
+                max-width: 30%; /* Ajuste para pantallas medianas si es necesario */
+            }
+
+            .video-section iframe {
+                width: 70%; /* Ajuste para pantallas medianas si es necesario */
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="section section1"></div>
+
+    <div class="section section2">
+        <img src="carloscarafoto.png" alt="Carlos Cara">
+    </div>
+
+    <div class="video-section">
+        <iframe width="800" height="450"
+            src="https://www.youtube.com/embed/3P_bNatzeTg"
+            title="Video Carlos Cara"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <div class="contact" id="contact">
+        <p>Email: <a href="mailto:carloscaralopez@gmail.com">carloscaralopez@gmail.com</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/carlos-cara-727b58109/" target="_blank">Carlos Cara</a></p>
+        <p>Instagram: <a href="https://www.instagram.com/carloscaralopez" target="_blank">@carloscaralopez</a></p>
+    </div>
+
+    <div class="cursor" id="customCursor"></div>
+
+    <script>
+        // Cursor personalizado
+        const cursor = document.getElementById('customCursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        });
+
+        // Efecto hover
+        document.querySelectorAll('a').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+        });
+
+        // Animación contacto
+        new IntersectionObserver((entries) => {
+            entries[0].isIntersecting && document.getElementById('contact').classList.add('visible');
+        }, { threshold: 0.1 }).observe(document.getElementById('contact'));
+    </script>
+</body>
+</html>

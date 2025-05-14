@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Mapa de Enlaces de Cine</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica', sans-serif;
+            background-color: #000;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* PORTADAS PARA MÓVIL */
+        .link {
+            position: absolute;
+            width: 28vw;  /* Tamaño proporcional al ancho de pantalla */
+            height: 42vw;  /* Relación 2:3 */
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 0 2px 1px rgba(0, 102, 255, 0.7);
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .link:active {
+            transform: scale(1.15);
+            box-shadow: 0 0 10px 2px rgba(0, 204, 255, 0.9);
+            z-index: 100;
+        }
+
+        .link img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* DISTRIBUCIÓN PARA MÓVIL */
+        .amor        { top: 3%; left: 3%; }
+        .puerta      { top: 3%; right: 3%; }
+        .apariencia  { 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            width: 30vw;  /* Centro ligeramente más grande */
+            height: 45vw;
+        }
+        .no-salgo    { bottom: 3%; left: 3%; }
+        .billete     { bottom: 3%; right: 3%; }
+
+        /* INDICADOR TÁCTIL (reemplaza al cursor) */
+        .touch-indicator {
+            display: none;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(0, 204, 255, 0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.9; }
+            100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.6; }
+        }
+
+        /* VERSIÓN ESCRITORIO (solo si es necesario) */
+        @media (min-width: 769px) {
+            .link {
+                width: 220px;
+                height: 330px;
+            }
+            .apariencia {
+                width: 240px;
+                height: 360px;
+            }
+            body {
+                cursor: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="cine.png" alt="Fondo" class="background" />
+
+        <!-- PORTADAS TÁCTILES -->
+        <a href="billete.html" class="link billete">
+            <img src="billeteportada.png" alt="Billete de Ida">
+        </a>
+        <a href="amor-tizar.html" class="link amor">
+            <img src="amortizarportada.png" alt="Amor-Tizar mi tiempo">
+        </a>
+        <a href="lapuerta.html" class="link puerta">
+            <img src="lapuertaportada.png" alt="La Puerta">
+        </a>
+        <a href="alapariencia.html" class="link apariencia">
+            <img src="laaparienciaportada.png" alt="La Apariencia">
+        </a>
+        <a href="nosalgomas.html" class="link no-salgo">
+            <img src="nosalgoportada.png" alt="No Salgo Más">
+        </a>
+    </div>
+
+    <div class="touch-indicator"></div>
+
+    <script>
+        // Adaptación táctil
+        if (window.innerWidth <= 768) {
+            document.querySelectorAll('.link').forEach(link => {
+                link.addEventListener('touchstart', function(e) {
+                    const indicator = document.querySelector('.touch-indicator');
+                    indicator.style.display = 'block';
+                    indicator.style.left = `${e.touches[0].clientX}px`;
+                    indicator.style.top = `${e.touches[0].clientY}px`;
+                    
+                    // Feedback táctil en dispositivos que lo soportan
+                    if (window.navigator.vibrate) {
+                        window.navigator.vibrate(10);
+                    }
+                });
+                
+                link.addEventListener('touchend', function() {
+                    document.querySelector('.touch-indicator').style.display = 'none';
+                });
+            });
+            
+            // Prevenir zoom con doble toque
+            document.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+        } else {
+            // Versión desktop con cursor personalizado
+            const cursor = document.createElement('div');
+            cursor.className = 'cursor';
+            document.body.appendChild(cursor);
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+            });
+            
+            document.querySelector('.touch-indicator').remove();
+        }
+    </script>
+</body>
+</html>
