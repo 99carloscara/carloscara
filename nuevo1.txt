@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Portafolio Carlos Cara</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #cafff3, #f6ecff);
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 150px);
+      grid-gap: 20px;
+      text-align: center;
+    }
+
+    .box {
+      background-color: #0019ff;
+      color: white;
+      padding: 40px 10px;
+      font-weight: bold;
+      border-radius: 12px;
+      transition: box-shadow 0.4s ease, transform 0.3s;
+    }
+
+    .box:hover {
+      box-shadow: 0 0 25px 10px rgba(0, 255, 255, 0.6);
+      transform: scale(1.05);
+    }
+
+    .cine:hover { box-shadow: 0 0 30px 10px red; }
+    .diseno:hover { box-shadow: 0 0 30px 10px blue; }
+    .foto:hover { box-shadow: 0 0 30px 10px green; }
+
+    .nombre {
+      grid-column: span 2;
+      font-size: 1.5em;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid">
+    <div class="box cine">CINE</div>
+    <div class="box diseno">DISEÑO GRÁFICO</div>
+    <div class="nombre box">CARLOS CARA</div>
+    <div class="box foto">FOTOGRAFÍA</div>
+  </div>
+
+</body>
+</html>

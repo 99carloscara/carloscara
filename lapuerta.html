@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Puerta</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: 
+        linear-gradient(to bottom, #0066ff 2px, transparent 2px) top / 100% 10px,
+        linear-gradient(to top, #0066ff 2px, transparent 2px) bottom / 100% 10px,
+        url('lapuerta.png') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      overflow-x: hidden;
+      animation: fadeInBody 1.5s ease-out both;
+      cursor: none;
+    }
+
+    @keyframes fadeInBody {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .linea-superior,
+    .linea-inferior {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #0066ff, #66aaff, #0066ff);
+      box-shadow: 0 0 10px rgba(0, 102, 255, 0.8);
+      animation: glow 3s ease-in-out infinite;
+      z-index: 5;
+    }
+
+    .linea-superior {
+      top: 0;
+    }
+
+    .linea-inferior {
+      bottom: 0;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(0, 102, 255, 0.8);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(0, 102, 255, 1);
+      }
+    }
+
+    /* Video en versión web */
+    .video-container {
+      width: 22%;
+      aspect-ratio: 1;
+      position: fixed;
+      bottom: 100px;
+      right: calc(30px + 200px);
+      border: 2px solid rgba(0, 102, 255, 0.5);
+      border-radius: 4px;
+      box-shadow: 0 0 12px rgba(0,102,255,0.7);
+      z-index: 10;
+    }
+
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Video móvil - oculto por defecto */
+    .video-movil {
+      display: none;
+    }
+
+    .background-expander {
+      min-height: 120vh;
+      min-width: 100vw;
+    }
+
+    .cursor {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle, rgba(0, 204, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: all 0.1s ease;
+    }
+
+    /* Estilos móviles */
+    @media screen and (max-width: 768px) {
+      body {
+        background-image: url('lapuertavertical.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-position: center 40px; /* Ajustado para dejar espacio arriba */
+        cursor: auto;
+        padding-bottom: 180px; /* Espacio reservado para el video */
+      }
+
+      .linea-superior,
+      .linea-inferior {
+        display: none;
+      }
+
+      .video-container {
+        display: none;
+      }
+
+      .video-movil {
+        display: block;
+        width: 85%;
+        max-width: 350px;
+        position: fixed;
+        bottom: 40px; /* Posición desde abajo */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+
+      .video-movil iframe {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 0 12px rgba(0,102,255,0.5);
+      }
+
+      .cursor {
+        display: none;
+      }
+
+      .background-expander {
+        display: none;
+      }
+    }
+
+    /* Ajustes para móviles más pequeños */
+    @media screen and (max-width: 480px) {
+      body {
+        background-position: center 20px;
+        padding-bottom: 150px;
+      }
+      
+      .video-movil {
+        bottom: 30px;
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="linea-superior"></div>
+  <div class="linea-inferior"></div>
+
+  <!-- Video escritorio (versión web) -->
+  <div class="video-container">
+    <iframe src="https://www.youtube.com/embed/m3PNmVMuSYM" allowfullscreen></iframe>
+  </div>
+
+  <!-- Video móvil -->
+  <div class="video-movil">
+    <iframe src="https://www.youtube.com/embed/m3PNmVMuSYM" allowfullscreen></iframe>
+  </div>
+
+  <!-- Cursor personalizado -->
+  <div class="cursor"></div>
+
+  <script>
+    const cursor = document.querySelector('.cursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    });
+  </script>
+</body>
+</html>
+
+
+
+
