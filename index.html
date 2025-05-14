@@ -1,41 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<head>
-    <!-- Añade esto ANTES de tus estilos CSS -->
+    <!-- Conexión a Google Fonts corregida -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jacquard+24&display=swap" rel="stylesheet">
     
-    <!-- Tu meta tags y demás -->
-</head>
-    <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Carlos Cara</title>
-	<link rel="stylesheet" href="estilos.css">
-   <style>
-    /* Reemplaza todas las instancias de 'Ancient Medium' por 'Jacquard 24' */
-.nombre-web, .nombre-movil {
-    font-family: 'Jacquard 24', system-ui, serif;
-    /* Ajusta el tamaño si es necesario */
-    font-size: 2.5rem;
-}
-	/* Coloca esto AL INICIO de tu etiqueta <style> */
-    @font-face {
-    font-family: 'Ancient Medium';
-    src: local('Ancient Medium'), /* Primero intenta local */
-         url('./fonts/AncientMedium.woff2') format('woff2'),
-         url('./fonts/AncientMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block; /* Cambia a block para evitar flash de fuentes */
-    unicode-range: U+000-5FF; /* Solo carga los glifos necesarios */
-}
-    
-
-
-
-
+    <style>
+        /* FUENTE JACQUARD 24 CON FALLBACK CONTROLADO */
+        @font-face {
+            font-family: 'Jacquard-Fallback';
+            src: local('Georgia'), local('Times New Roman'), local('serif');
+        }
+        
+        .nombre-web, 
+        .nombre-movil,
+        .pantalla-inicio span:first-child {
+            font-family: 'Jacquard 24', 'Jacquard-Fallback', serif;
+            font-weight: normal;
+            font-style: normal;
+            letter-spacing: 1px;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
         /* ESTILO DEL CURSOR PERSONALIZADO */
         body {
@@ -60,10 +51,6 @@
             text-align: center;
             animation: fundido 3s ease-in-out forwards;
             text-transform: uppercase;
-        }
-
-        .pantalla-inicio span:first-child {
-            font-family: 'Ancient Medium', serif;
         }
 
         .pantalla-inicio span:last-child {
@@ -137,7 +124,6 @@
         }
 
         .nombre-web {
-            font-family: 'Ancient Medium', serif;
             font-size: 2rem;
         }
 
@@ -241,12 +227,10 @@
             transition: transform 0.2s;
             text-transform: uppercase;
             cursor: pointer;
-            font-family: Helvetica, sans-serif; /* Por defecto Helvetica para todos los botones móviles */
+            font-family: Helvetica, sans-serif;
         }
 
-        /* Solo el botón CARLOS CARA en móvil usa Ancient Medium */
         .nombre-movil {
-            font-family: 'Ancient Medium', serif;
             font-size: 1.8rem;
             padding: 16px 28px;
         }
@@ -322,7 +306,6 @@
     </style>
 </head>
 <body>
-
     <div class="pantalla-inicio">
         <span>CARLOS CARA</span>
         <span>PORTFOLIO</span>
@@ -384,8 +367,35 @@
             pdfViewer.style.display = 'none';
         }
 
+        // Verificación mejorada de fuentes
+        function verificarFuentes() {
+            const testElement = document.createElement('span');
+            testElement.style.fontFamily = 'Jacquard 24';
+            testElement.style.fontSize = '48px';
+            testElement.style.position = 'absolute';
+            testElement.style.visibility = 'hidden';
+            testElement.textContent = 'Test';
+            document.body.appendChild(testElement);
+            
+            setTimeout(() => {
+                const defaultWidth = testElement.offsetWidth;
+                testElement.style.fontFamily = 'monospace';
+                const monospaceWidth = testElement.offsetWidth;
+                
+                if (defaultWidth === monospaceWidth) {
+                    console.warn('Jacquard 24 no cargada - Usando fallback');
+                    document.querySelectorAll('.nombre-web, .nombre-movil, .pantalla-inicio span:first-child').forEach(el => {
+                        el.style.fontFamily = '"Jacquard-Fallback", serif';
+                    });
+                }
+                document.body.removeChild(testElement);
+            }, 100);
+        }
+
         // Animación del degradado para versión móvil
         document.addEventListener('DOMContentLoaded', function() {
+            verificarFuentes();
+            
             const degradadoMovil = document.querySelector('.degradado-animado');
             let lastScroll = 0;
 
@@ -407,25 +417,7 @@
             setTimeout(() => {
                 moverDegradado();
             }, 3000);
-
-            // Verificar si la fuente está cargada
-            document.fonts.load('1em "Ancient Medium"').then(() => {
-                console.log('Fuente Ancient Medium cargada correctamente');
-                // Aplicar la fuente a los elementos móviles después de la carga
-                const nombreMovil = document.querySelector('.nombre-movil');
-                if (nombreMovil) {
-                    nombreMovil.style.fontFamily = "'Ancient Medium', serif";
-                }
-            }).catch(err => {
-                console.error('Error cargando la fuente Ancient Medium:', err);
-            });
         });
     </script>
-	// Añade esto al final de tu body para diagnosticar
-<script>
-document.fonts.ready.then(() => {
-    console.log('Fuentes cargadas:', document.fonts.check('1em "Ancient Medium"'));
-});
-</script>
 </body>
 </html>
