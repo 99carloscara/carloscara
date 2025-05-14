@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
+<head>
+    <!-- Añade esto ANTES de tus estilos CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jacquard+24&display=swap" rel="stylesheet">
+    
+    <!-- Tu meta tags y demás -->
+</head>
     <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Carlos Cara</title>
 	<link rel="stylesheet" href="estilos.css">
    <style>
-    /* Coloca esto AL INICIO de tu etiqueta <style> */
+    /* Reemplaza todas las instancias de 'Ancient Medium' por 'Jacquard 24' */
+.nombre-web, .nombre-movil {
+    font-family: 'Jacquard 24', system-ui, serif;
+    /* Ajusta el tamaño si es necesario */
+    font-size: 2.5rem;
+}
+	/* Coloca esto AL INICIO de tu etiqueta <style> */
     @font-face {
     font-family: 'Ancient Medium';
     src: local('Ancient Medium'), /* Primero intenta local */
