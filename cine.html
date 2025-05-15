@@ -19,7 +19,7 @@
         .container {
             position: relative;
             width: 100vw;
-            height: 150vh; /* Altura mayor que la pantalla para permitir scroll */
+            height: 110vh; /* Altura menor para reducir espacio abajo */
             overflow-x: hidden;
         }
 
@@ -174,7 +174,7 @@
         function adjustContainerHeight() {
             const container = document.querySelector('.container');
             if (window.innerWidth <= 768) {
-                container.style.height = '150vh'; // Altura suficiente para ver las últimas dos portadas
+                container.style.height = '110vh'; // Altura menor para reducir espacio abajo
             } else {
                 container.style.height = '100vh';
             }
