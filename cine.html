@@ -14,12 +14,13 @@
             touch-action: pan-y;
             height: 100vh;
             width: 100vw;
+            cursor: none; /* Oculta cursor estándar en escritorio */
         }
 
         .container {
             position: relative;
             width: 100vw;
-            height: 110vh; /* Altura menor para reducir espacio abajo */
+            height: 130vh; /* menos espacio abajo para scroll */
             overflow-x: hidden;
         }
 
@@ -110,14 +111,109 @@
             .puerta { top: 20%; right: 10%; }
             .no-salgo { bottom: 10%; left: 10%; }
             .billete { bottom: 10%; right: 10%; }
-            
-            body {
-                cursor: none;
-            }
+        }
+
+        /* MENÚ LATERAL */
+        .menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 220px;
+            height: 100vh;
+            background: rgba(0, 0, 255, 0.85); /* azul 0000FF con transparencia */
+            color: #e0f0ff; /* texto claro para contraste */
+            padding-top: 60px;
+            box-sizing: border-box;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 9999;
+            font-size: 18px;
+        }
+
+        .menu.active {
+            transform: translateX(0);
+        }
+
+        .menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #e0f0ff; /* texto claro */
+            text-decoration: none;
+            border-bottom: 1px solid #0033cc;
+            transition: background 0.2s ease;
+        }
+
+        .menu a:hover {
+            background: rgba(0, 102, 255, 0.3); /* azul difuminado */
+        }
+
+        /* HAMBURGUESA */
+        .menu-toggle {
+            cursor: pointer;
+            width: 36px;
+            height: 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: fixed;
+            top: 15px;
+            left: 10px;
+            z-index: 10000;
+        }
+
+        .menu-toggle div {
+            height: 6px;
+            background-color: #0000FF; /* azul eléctrico */
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* Animación para cuando el menú está activo (líneas cruzadas) */
+        .menu-toggle.active div:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+            background-color: #fff;
+        }
+        .menu-toggle.active div:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+            background-color: #fff;
+        }
+
+        /* Cursor azul difuminado */
+        @media (min-width: 769px) {
+          body::before {
+            content: '';
+            position: fixed;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(51, 153, 255, 0.3);
+            box-shadow: 0 0 15px 10px rgba(51, 153, 255, 0.4);
+            transform: translate(-50%, -50%);
+            transition: top 0.1s ease, left 0.1s ease;
+            z-index: 100000;
+          }
         }
     </style>
 </head>
 <body>
+    <div class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" role="button" tabindex="0">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <nav class="menu" id="menu">
+        <a href="index.html">Inicio</a>
+        <a href="cine.html">Cine</a>
+        <a href="carloscara.html">Carlos Cara</a>
+    </nav>
+
     <div class="container">
         <img src="cine.png" alt="Fondo" class="background" />
 
@@ -167,14 +263,15 @@
             }, { passive: false });
         } else {
             // Versión desktop
-            document.querySelector('.touch-indicator').remove();
+            const touchIndicator = document.querySelector('.touch-indicator');
+            if(touchIndicator) touchIndicator.remove();
         }
         
         // Ajustar altura del contenedor en móvil
         function adjustContainerHeight() {
             const container = document.querySelector('.container');
             if (window.innerWidth <= 768) {
-                container.style.height = '110vh'; // Altura menor para reducir espacio abajo
+                container.style.height = '130vh'; // menos espacio para scroll
             } else {
                 container.style.height = '100vh';
             }
@@ -182,6 +279,45 @@
         
         window.addEventListener('resize', adjustContainerHeight);
         adjustContainerHeight();
+
+        // Menú hamburguesa toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Soporte teclado para accesibilidad (Enter o Space abre/cierra menú)
+        menuToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                menu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            }
+        });
+
+        // Cursor azul difuminado seguimiento
+        if (window.matchMedia("(min-width: 769px)").matches) {
+            const halo = document.createElement('div');
+            halo.style.position = 'fixed';
+            halo.style.pointerEvents = 'none';
+            halo.style.width = '40px';
+            halo.style.height = '40px';
+            halo.style.borderRadius = '50%';
+            halo.style.background = 'rgba(51, 153, 255, 0.3)';
+            halo.style.boxShadow = '0 0 15px 10px rgba(51, 153, 255, 0.4)';
+            halo.style.transform = 'translate(-50%, -50%)';
+            halo.style.zIndex = '100000';
+            halo.style.transition = 'top 0.1s ease, left 0.1s ease';
+            document.body.appendChild(halo);
+
+            document.addEventListener('mousemove', e => {
+                halo.style.top = e.clientY + 'px';
+                halo.style.left = e.clientX + 'px';
+            });
+        }
     </script>
 </body>
 </html>
