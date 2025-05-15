@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -13,166 +13,142 @@
 
     html, body {
       width: 100%;
-      height: 100%;
-      font-family: sans-serif;
+      min-height: 100vh;
+      font-family: Helvetica, Arial, sans-serif;
       background-color: #000;
       overflow-x: hidden;
-    }
-
-    body {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
       background-image: url('amor-tizar mi tiempo.png');
       background-repeat: no-repeat;
       background-position: top center;
       background-size: contain;
-      min-height: 100vh;
-      position: relative;
-      padding-bottom: 140px; /* espacio para el video móvil */
     }
 
     .linea-superior, .linea-inferior {
       position: fixed;
       width: 100%;
       height: 4px;
-      background-color: #0066ff;
-      box-shadow: 0 2px 8px rgba(0, 102, 255, 0.8);
+      background-color: #0000FF;
+      box-shadow: 0 2px 8px rgba(0, 0, 255, 0.8);
       z-index: 9999;
     }
 
     .linea-superior { top: 0; }
     .linea-inferior { bottom: 0; }
 
-    /* MENÚ LATERAL */
+    /* Menú hamburguesa */
+    nav {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 10000;
+    }
+
+    .menu-toggle {
+      width: 35px;
+      height: 30px;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 11001;
+    }
+
+    .menu-toggle span {
+      display: block;
+      height: 4px;
+      background-color: #0000FF;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* Estado abierto: transformar barras en X */
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+      background-color: white;
+    }
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+      background-color: white;
+    }
+
+    /* Panel menú deslizable */
     .menu {
       position: fixed;
       top: 0;
       left: 0;
-      width: 220px;
       height: 100vh;
-      background: rgba(0, 0, 255, 0.85);
-      color: #e0f0ff;
-      padding-top: 60px;
-      box-sizing: border-box;
+      width: 250px;
+      background-color: #0000FF;
+      padding: 60px 30px;
+      box-shadow: 2px 0 12px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
       transform: translateX(-100%);
       transition: transform 0.3s ease;
-      z-index: 10000;
-      font-size: 18px;
+      z-index: 11000;
+      user-select: none;
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: white;
     }
 
-    .menu.active {
+    .menu.show {
       transform: translateX(0);
     }
 
     .menu a {
-      display: block;
-      padding: 12px 20px;
-      color: #e0f0ff;
+      color: white;
       text-decoration: none;
-      border-bottom: 1px solid #0033cc;
-      transition: background 0.2s ease;
+      transition: color 0.25s ease;
     }
 
     .menu a:hover {
-      background: rgba(0, 0, 255, 0.3);
+      color: #aaddff;
     }
 
-    /* HAMBURGUESA */
-    .menu-toggle {
-      cursor: pointer;
-      width: 36px;
-      height: 26px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: fixed;
-      top: 15px;
-      left: 10px;
-      z-index: 11000;
+    /* Contenedor principal para empujar el video abajo */
+    .main-content {
+      flex: 1;
+      width: 100%;
     }
 
-    .menu-toggle div {
-      height: 5px;
-      background-color: #0000FF; /* azul eléctrico */
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-
-    /* Animación para cuando el menú está activo (líneas cruzadas) */
-    .menu-toggle.active div:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
-      background-color: #fff;
-    }
-    .menu-toggle.active div:nth-child(2) {
-      opacity: 0;
-    }
-    .menu-toggle.active div:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-      background-color: #fff;
-    }
-
-    /* Video escritorio */
-    .video-container {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      width: 18%;
+    /* Video - siempre abajo del todo */
+    .video-abajo {
+      width: 90vw;
+      max-width: 900px;
+      margin: 0 auto 40px auto;
       aspect-ratio: 16 / 9;
-      border: 2px solid rgba(0, 102, 255, 0.5);
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(0, 102, 255, 0.6);
-      z-index: 1000;
+      border: 2px solid #0000FF;
+      border-radius: 12px;
+      box-shadow: 0 0 18px rgba(0, 0, 255, 0.9);
+      background: white;
     }
 
-    .video-container iframe {
+    .video-abajo iframe {
       width: 100%;
       height: 100%;
       border: none;
-      display: block;
-    }
-
-    /* Video móvil */
-    .video-movil {
-      display: none;
-      width: 90%;
-      max-width: 600px;
-      margin: 20px auto 20px auto;
       border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-    }
-
-    .video-movil iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border: none;
       display: block;
     }
 
-    /* Media queries para móviles */
+    /* Media queries móviles */
     @media screen and (max-width: 768px) {
       body {
         background-image: url('amortizarvertical.png');
-        background-repeat: no-repeat;
         background-size: cover;
-        background-position: top center;
-        min-height: 100vh;
-        padding-bottom: 90px; /* espacio para el video móvil */
       }
 
-      .video-container {
-        display: none;
-      }
-
-      .video-movil {
-        display: block;
+      .video-abajo {
+        max-width: 600px;
+        margin-bottom: 60px;
       }
 
       .linea-superior, .linea-inferior {
@@ -183,48 +159,48 @@
 </head>
 <body>
 
-  <div class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" role="button" tabindex="0">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-
-  <nav class="menu" id="menu">
-    <a href="index.html">Inicio</a>
-    <a href="cine.html">Cine</a>
-    <a href="carloscara.html">Carlos Cara</a>
-  </nav>
-
   <div class="linea-superior"></div>
   <div class="linea-inferior"></div>
 
-  <!-- Video escritorio -->
-  <div class="video-container">
+  <!-- Menú hamburguesa -->
+  <nav>
+    <div class="menu-toggle" id="menuToggle" aria-label="Abrir menú" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="menu" id="menu">
+      <a href="index.html">Inicio</a>
+      <a href="cine.html">Cine</a>
+      <a href="carloscara.html">Carlos Cara</a>
+    </div>
+  </nav>
+
+  <!-- Contenedor principal vacío para empujar el video abajo -->
+  <div class="main-content"></div>
+
+  <!-- Video único siempre abajo del todo -->
+  <div class="video-abajo">
     <iframe src="https://www.youtube.com/embed/eVUI072l0tM" allowfullscreen></iframe>
   </div>
 
-  <!-- Video móvil -->
-  <div class="video-movil">
-    <iframe src="https://www.youtube.com/embed/eVUI072l0tM" allowfullscreen></iframe>
-  </div>
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('menu');
 
-<script>
-  const menuToggle = document.getElementById('menu-toggle');
-  const menu = document.getElementById('menu');
-
-  menuToggle.addEventListener('click', () => {
-    menu.classList.toggle('active');
-    menuToggle.classList.toggle('active');
-  });
-
-  menuToggle.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      menu.classList.toggle('active');
+    menuToggle.addEventListener('click', () => {
       menuToggle.classList.toggle('active');
-    }
-  });
-</script>
+      menu.classList.toggle('show');
+    });
+
+    menuToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        menuToggle.click();
+      }
+    });
+  </script>
 
 </body>
 </html>
