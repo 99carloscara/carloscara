@@ -114,18 +114,18 @@
       color: #aaddff;
     }
 
-    /* Video - Escritorio: más pequeño y abajo a la derecha */
+    /* Video escritorio abajo derecha */
     .video-abajo {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 400px;
-      max-width: 50vw;
+      width: 28vw;
+      max-width: 550px;
       aspect-ratio: 16 / 9;
       border: 2px solid #0000FF;
       border-radius: 12px;
       box-shadow: 0 0 18px rgba(0, 0, 255, 0.9);
-      background: transparent;
+      background: white;
       z-index: 10;
     }
 
@@ -144,18 +144,23 @@
         background-size: cover;
       }
 
-      .linea-superior, .linea-inferior {
-        height: 2px;
-      }
-
       .video-abajo {
-        bottom: env(safe-area-inset-bottom, 20px);
+        position: fixed;
+        bottom: env(safe-area-inset-bottom, 25px);
         left: 50%;
         transform: translateX(-50%);
-        right: auto;
-        width: 90vw;
+        width: 50vw;
         max-width: none;
         margin: 0;
+        border-radius: 10px;
+        border: 2px solid #0000FF;
+        box-shadow: 0 0 15px rgba(0, 0, 255, 0.5);
+        background: white;
+        z-index: 10;
+      }
+
+      .linea-superior, .linea-inferior {
+        height: 2px;
       }
     }
   </style>
@@ -180,7 +185,7 @@
     </div>
   </nav>
 
-  <!-- Video único siempre abajo del todo -->
+  <!-- Video único siempre abajo -->
   <div class="video-abajo">
     <iframe src="https://www.youtube.com/embed/eVUI072l0tM" allowfullscreen></iframe>
   </div>
@@ -204,3 +209,4 @@
 
 </body>
 </html>
+
