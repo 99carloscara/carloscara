@@ -2,34 +2,32 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nosalgomás</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>La Puerta</title>
   <style>
-    body {
+    /* Reset y base */
+    html, body {
       margin: 0;
       padding: 0;
-      background-image: url('nosalgo.png.jpg');
+      width: 100vw;
+      overflow-x: hidden;
+      box-sizing: border-box;
+      cursor: none;
+      font-family: 'Helvetica', sans-serif;
+      height: 100vh;
+      background-color: transparent;
+    }
+
+    body {
+      background-image: url('lapuerta.png'); /* Cambia a tu imagen */
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
       background-attachment: fixed;
-      min-height: 100vh;
       overflow-x: hidden;
-      animation: fadeInBody 1.5s ease-out both;
-      cursor: none;
     }
 
-    @keyframes fadeInBody {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
+    /* Líneas superior e inferior */
     .linea-superior,
     .linea-inferior {
       position: fixed;
@@ -41,15 +39,8 @@
       animation: glow 3s ease-in-out infinite;
       z-index: 5;
     }
-
-    .linea-superior {
-      top: 0;
-    }
-
-    .linea-inferior {
-      bottom: 0;
-    }
-
+    .linea-superior { top: 0; }
+    .linea-inferior { bottom: 0; }
     @keyframes glow {
       0%, 100% {
         box-shadow: 0 0 10px rgba(0, 102, 255, 0.8);
@@ -59,73 +50,205 @@
       }
     }
 
+    /* Video web container */
     .video-web-container {
-      width: 25%;
+      width: 22%;
       position: fixed;
       bottom: 10px;
-      right: 120px; /* Más a la izquierda */
+      right: 120px;
       z-index: 2;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(0, 102, 255, 0.8);
+      transition: box-shadow 0.3s ease;
+      background: transparent;
     }
-
+    .video-web-container:hover {
+      box-shadow: 0 0 25px rgba(0, 153, 255, 1);
+      background: rgba(0, 102, 255, 0.1);
+    }
     .video-web-container iframe {
       width: 100%;
-      height: 250px;
+      height: 230px;
       border: none;
       border-radius: 8px;
+      pointer-events: auto;
     }
 
+    /* Media queries móvil */
     @media screen and (max-width: 768px) {
       body {
-        background-image: url('nosalgovertical.png');
+        background-image: url('lapuertavertical.png'); /* Cambia a tu imagen vertical */
         background-size: contain;
         background-repeat: no-repeat;
-        background-attachment: scroll;
         background-position: center center;
-        cursor: auto;
-        background-color: transparent;
+        background-attachment: scroll;
       }
-
-      .linea-superior,
-      .linea-inferior {
+      .linea-superior, .linea-inferior {
         display: none;
       }
-
       .video-web-container {
-        width: 60%;
-        position: fixed;
-        bottom: -10px;
+        width: 55%;
         left: 50%;
+        bottom: 5px;
+        right: auto;
         transform: translateX(-50%);
-        z-index: 2;
+        height: auto;
+        box-shadow: 0 0 10px rgba(0, 102, 255, 0.6);
       }
-
       .video-web-container iframe {
-        height: 180px;
+        height: 160px;
+      }
+    }
+
+    /* MENÚ LATERAL */
+    .menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: 100vh;
+      background: rgba(0, 0, 255, 0.85);
+      color: #e0f0ff;
+      padding-top: 60px;
+      box-sizing: border-box;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 9999;
+      font-size: 18px;
+      font-family: 'Helvetica', sans-serif;
+    }
+    .menu.active {
+      transform: translateX(0);
+    }
+    .menu a {
+      display: block;
+      padding: 12px 20px;
+      color: #e0f0ff;
+      text-decoration: none;
+      border-bottom: 1px solid #0033cc;
+      transition: background 0.2s ease;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .menu a:hover {
+      background: rgba(0, 102, 255, 0.3);
+    }
+
+    /* HAMBURGUESA */
+    .menu-toggle {
+      cursor: pointer;
+      width: 36px;
+      height: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 15px;
+      left: 10px;
+      z-index: 10000;
+    }
+    .menu-toggle div {
+      height: 6px;
+      background-color: #0000FF;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    .menu-toggle.active div:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+      background-color: #fff;
+    }
+    .menu-toggle.active div:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+      background-color: #fff;
+    }
+
+    /* Cursor azul difuminado desktop */
+    @media (min-width: 769px) {
+      body::before {
+        content: '';
+        position: fixed;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(51, 153, 255, 0.3);
+        box-shadow: 0 0 15px 10px rgba(51, 153, 255, 0.4);
+        transform: translate(-50%, -50%);
+        transition: top 0.1s ease, left 0.1s ease;
+        z-index: 100000;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Menú hamburguesa -->
+  <div class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" role="button" tabindex="0">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <nav class="menu" id="menu">
+    <a href="index.html">Inicio</a>
+    <a href="cine.html">Cine</a>
+    <a href="carloscara.html">Carlos Cara</a>
+  </nav>
+
   <div class="linea-superior"></div>
   <div class="linea-inferior"></div>
 
-  <div class="video-web-container">
-    <iframe src="https://www.youtube.com/embed/eVUI072l0tM"
-      frameborder="0"
+  <div class="video-web-container" title="Video YouTube">
+    <iframe
+      src="https://www.youtube.com/embed/m3PNmVMuSYM"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
   </div>
 
   <script>
-    const cursor = document.querySelector('.cursor');
-    document.addEventListener('mousemove', (e) => {
-      if (cursor) {
-        cursor.style.left = `${e.clientX}px`;
-        cursor.style.top = `${e.clientY}px`;
+    // Toggle menú hamburguesa
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+    });
+    menuToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        menu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
       }
     });
+
+    // Cursor personalizado azul difuminado para desktop
+    if (window.matchMedia("(min-width: 769px)").matches) {
+      const halo = document.createElement('div');
+      halo.style.position = 'fixed';
+      halo.style.pointerEvents = 'none';
+      halo.style.width = '40px';
+      halo.style.height = '40px';
+      halo.style.borderRadius = '50%';
+      halo.style.background = 'rgba(51, 153, 255, 0.3)';
+      halo.style.boxShadow = '0 0 15px 10px rgba(51, 153, 255, 0.4)';
+      halo.style.transform = 'translate(-50%, -50%)';
+      halo.style.zIndex = '100000';
+      halo.style.transition = 'top 0.1s ease, left 0.1s ease';
+      document.body.appendChild(halo);
+
+      document.addEventListener('mousemove', e => {
+        halo.style.top = e.clientY + 'px';
+        halo.style.left = e.clientX + 'px';
+      });
+    }
   </script>
 
 </body>

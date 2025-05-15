@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>La Puerta</title>
   <style>
+    /* Reset y cuerpo */
     body {
       margin: 0;
       padding: 0;
@@ -30,6 +31,7 @@
       }
     }
 
+    /* Líneas superior e inferior */
     .linea-superior,
     .linea-inferior {
       position: fixed;
@@ -59,7 +61,7 @@
       }
     }
 
-    /* Video en versión web */
+    /* Video escritorio */
     .video-container {
       width: 22%;
       aspect-ratio: 1;
@@ -83,11 +85,7 @@
       display: none;
     }
 
-    .background-expander {
-      min-height: 120vh;
-      min-width: 100vw;
-    }
-
+    /* Cursor personalizado */
     .cursor {
       position: absolute;
       width: 40px;
@@ -99,6 +97,62 @@
       transition: all 0.1s ease;
     }
 
+    /* Menú hamburguesa */
+    .menu-toggle {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      width: 30px;
+      height: 24px;
+      z-index: 100;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 100%;
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* Menú lateral */
+    nav {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 220px;
+      height: 100%;
+      background: #0000FF; /* Azul */
+      padding: 60px 20px 20px;
+      box-shadow: 2px 0 12px rgba(0, 0, 255, 0.5);
+      transition: left 0.3s ease;
+      z-index: 99;
+      font-family: Helvetica, sans-serif;
+    }
+
+    nav.open {
+      left: 0;
+    }
+
+    nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #ccccff;
+    }
+
     /* Estilos móviles */
     @media screen and (max-width: 768px) {
       body {
@@ -106,9 +160,9 @@
         background-size: contain;
         background-repeat: no-repeat;
         background-attachment: scroll;
-        background-position: center 40px; /* Ajustado para dejar espacio arriba */
+        background-position: center 40px;
         cursor: auto;
-        padding-bottom: 180px; /* Espacio reservado para el video */
+        padding-bottom: 180px; /* espacio para video móvil */
       }
 
       .linea-superior,
@@ -125,7 +179,7 @@
         width: 85%;
         max-width: 350px;
         position: fixed;
-        bottom: 40px; /* Posición desde abajo */
+        bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 10;
@@ -142,13 +196,8 @@
       .cursor {
         display: none;
       }
-
-      .background-expander {
-        display: none;
-      }
     }
 
-    /* Ajustes para móviles más pequeños */
     @media screen and (max-width: 480px) {
       body {
         background-position: center 20px;
@@ -156,7 +205,7 @@
       }
       
       .video-movil {
-        bottom: 30px;
+        bottom: 15px;
         width: 90%;
       }
     }
@@ -167,14 +216,28 @@
   <div class="linea-superior"></div>
   <div class="linea-inferior"></div>
 
-  <!-- Video escritorio (versión web) -->
+  <!-- Menú hamburguesa -->
+  <div class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" role="button" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Navegación lateral -->
+  <nav id="menu">
+    <a href="index.html">INICIO</a>
+    <a href="cine.html">CINE</a>
+    <a href="carloscara.html">CARLOS CARA</a>
+  </nav>
+
+  <!-- Video escritorio -->
   <div class="video-container">
-    <iframe src="https://www.youtube.com/embed/m3PNmVMuSYM" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/m3PNmVMuSYM" allowfullscreen title="Video La Puerta"></iframe>
   </div>
 
   <!-- Video móvil -->
   <div class="video-movil">
-    <iframe src="https://www.youtube.com/embed/m3PNmVMuSYM" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/m3PNmVMuSYM" allowfullscreen title="Video La Puerta móvil"></iframe>
   </div>
 
   <!-- Cursor personalizado -->
@@ -182,6 +245,23 @@
 
   <script>
     const cursor = document.querySelector('.cursor');
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    // Toggle menú al click en hamburguesa
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('open');
+    });
+
+    // Accesibilidad teclado (Enter o espacio)
+    menuToggle.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        menu.classList.toggle('open');
+      }
+    });
+
+    // Cursor azul difuminado que sigue el ratón
     document.addEventListener('mousemove', (e) => {
       cursor.style.left = `${e.clientX}px`;
       cursor.style.top = `${e.clientY}px`;
@@ -189,7 +269,3 @@
   </script>
 </body>
 </html>
-
-
-
-

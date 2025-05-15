@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La apariencia por el culo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Apariencia</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: 
+      background:
         linear-gradient(to bottom, #0066ff 2px, transparent 2px) top / 100% 10px,
         linear-gradient(to top, #0066ff 2px, transparent 2px) bottom / 100% 10px,
         url('lapariencia.png.png') no-repeat center center fixed;
@@ -17,6 +17,7 @@
       overflow-x: hidden;
       animation: fadeInBody 1.5s ease-out both;
       cursor: none;
+      font-family: sans-serif;
     }
 
     @keyframes fadeInBody {
@@ -44,7 +45,19 @@
       50% { box-shadow: 0 0 20px rgba(0, 102, 255, 1); }
     }
 
-    /* Video en ESCRITORIO */
+    /* Cursor personalizado */
+    .cursor {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle, rgba(0, 204, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: all 0.1s ease;
+    }
+
+    /* Video escritorio */
     .video-desktop {
       width: 25%;
       position: fixed;
@@ -59,87 +72,161 @@
       height: 250px;
       border: none;
       border-radius: 8px;
-      box-shadow: 0 0 12px rgba(0,102,255,0.7);
+      box-shadow: 0 0 12px rgba(0, 102, 255, 0.7);
     }
 
-    /* Video en MÓVIL (oculto en desktop) */
+    /* Video móvil */
     .video-movil {
       display: none;
     }
 
-    /* Cursor personalizado */
-    .cursor {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: radial-gradient(circle, rgba(0, 204, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      transition: all 0.1s ease;
-    }
-
-    /* Estilos para MÓVIL */
-   @media screen and (max-width: 768px) {
-    body {
-      background-image: url('laaparienciavertical.png');
-      background-size: cover; /* Cambiamos a cover para que la imagen cubra todo */
-      background-repeat: no-repeat;
-      background-attachment: scroll;
-      background-position: center top; /* Mantenemos centrado horizontal y pegado arriba */
-      cursor: auto;
-      padding-bottom: 200px; /* Ajustamos el padding inferior para el video */
-    }
-
-    .linea-superior,
-    .linea-inferior {
-      display: none;
-    }
-
-    /* Ocultar video desktop en móvil */
-    .video-desktop {
-      display: none;
-    }
-
-    /* Video móvil: centrado, más pequeño y sin banda negra */
-    .video-movil {
-      display: block;
-      width: 80%; /* Más estrecho */
-      max-width: 320px; /* Tamaño máximo controlado */
+    /* ==== MENÚ ==== */
+    .menu {
       position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: 100vh;
+      background: rgba(0, 0, 255, 0.85);
+      color: #e0f0ff;
+      padding-top: 60px;
+      box-sizing: border-box;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 9999;
     }
 
-    .video-movil iframe {
-      width: 100%;
-      height: 160px; /* Altura reducida */
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(0, 102, 255, 0.5);
+    .menu.active {
+      transform: translateX(0);
     }
 
-    .cursor {
-      display: none;
+    .menu a {
+      display: block;
+      padding: 12px 20px;
+      color: #e0f0ff;
+      text-decoration: none;
+      border-bottom: 1px solid #0033cc;
+      transition: background 0.2s ease;
+      font-family: 'Helvetica', sans-serif;
     }
-  
+
+    .menu a:hover {
+      background: rgba(0, 102, 255, 0.3);
+    }
+
+    /* Menú toggle - líneas hamburguesa en azul #0000FF */
+    .menu-toggle {
+      cursor: pointer;
+      width: 36px;
+      height: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 15px;
+      left: 10px;
+      z-index: 10000;
+    }
+
+    .menu-toggle div {
+      height: 6px;
+      background-color: #0000FF;  /* azul puro */
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle.active div:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+      background-color: #fff;
+    }
+
+    .menu-toggle.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+      background-color: #fff;
+    }
+
+    /* ==== MEDIA QUERY PARA MÓVIL ==== */
+    @media screen and (max-width: 768px) {
+      body {
+        background-image: url('laaparienciavertical.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-position: center top;
+        cursor: auto;
+        padding-bottom: 200px;
+      }
+
+      .linea-superior,
+      .linea-inferior {
+        display: none;
+      }
+
+      .video-desktop {
+        display: none;
+      }
+
+      .video-movil {
+        display: block;
+        width: 80%;
+        max-width: 320px;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+
+      .video-movil iframe {
+        width: 100%;
+        height: 160px;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 0 12px rgba(0, 102, 255, 0.5);
+      }
+
+      .cursor {
+        display: none;
+      }
+
+      /* Quitamos línea azul vertical que aparecía a la izquierda */
+      .menu {
+        box-shadow: none !important;
+        border-left: none !important;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Menú Hamburguesa -->
+  <div class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" role="button" tabindex="0">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Menú lateral -->
+  <nav class="menu" id="menu">
+    <a href="index.html">Inicio</a>
+    <a href="cine.html">Cine</a>
+    <a href="carloscara.html">Carlos Cara</a>
+  </nav>
+
   <!-- Líneas decorativas -->
   <div class="linea-superior"></div>
   <div class="linea-inferior"></div>
 
-  <!-- Video Desktop -->
+  <!-- Video escritorio -->
   <div class="video-desktop">
     <iframe src="https://www.youtube.com/embed/bIXfdo3quAk" frameborder="0" allowfullscreen></iframe>
   </div>
 
-  <!-- Video Móvil -->
+  <!-- Video móvil -->
   <div class="video-movil">
     <iframe src="https://www.youtube.com/embed/bIXfdo3quAk" frameborder="0" allowfullscreen></iframe>
   </div>
@@ -148,12 +235,31 @@
   <div class="cursor"></div>
 
   <script>
+    // Cursor halo (solo escritorio)
     const cursor = document.querySelector('.cursor');
     document.addEventListener('mousemove', (e) => {
-      cursor.style.left = `${e.clientX}px`;
-      cursor.style.top = `${e.clientY}px`;
+      if (cursor) {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+      }
+    });
+
+    // Menú toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+    });
+
+    menuToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        menu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+      }
     });
   </script>
-
 </body>
 </html>
