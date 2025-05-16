@@ -14,7 +14,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: 
+            background:
                 linear-gradient(to bottom, #0066ff 2px, transparent 2px) top / 100% 10px,
                 linear-gradient(to top, #0066ff 2px, transparent 2px) bottom / 100% 10px,
                 url('lapuerta.png') no-repeat center center fixed;
@@ -133,13 +133,16 @@
         /* Video móvil */
         .video-movil {
             display: none;
-            width: 90%;
-            max-width: 350px;
+            width: 80%;
+            max-width: 300px;
             margin: 20px auto;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             overflow: hidden;
-            position: relative;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 10;
         }
 
@@ -177,7 +180,7 @@
                 background-repeat: no-repeat;
                 background-position: center center;
                 cursor: auto;
-                padding-bottom: 220px;
+                padding-bottom: 240px;
             }
 
             .video-escritorio {
@@ -190,8 +193,8 @@
                 bottom: 20px;
                 left: 50%;
                 transform: translateX(-50%);
-                width: 90%;
-                max-width: 350px;
+                width: 80%;
+                max-width: 300px;
             }
 
             .cursor {
@@ -206,12 +209,13 @@
 
         @media screen and (max-width: 480px) {
             body {
-                padding-bottom: 190px;
+                padding-bottom: 210px;
             }
 
             .video-movil {
                 bottom: 15px;
-                width: 95%;
+                width: 90%;
+                max-width: 280px;
             }
         }
     </style>
