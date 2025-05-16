@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>Mapa de Enlaces de Cine</title>
+    <link rel="icon" href="logocarlos.png" type="image/png">
     <style>
         body {
             margin: 0;
@@ -59,9 +60,9 @@
         /* DISTRIBUCIÓN PARA MÓVIL */
         .amor        { top: 5vh; left: 5vw; }
         .puerta      { top: 5vh; right: 5vw; }
-        .apariencia  { 
-            top: 35vh; 
-            left: 50vw; 
+        .apariencia  {
+            top: 35vh;
+            left: 50vw;
             transform: translateX(-50%);
             width: 30vw;
             height: 45vw;
@@ -94,19 +95,19 @@
             .container {
                 height: 100vh;
             }
-            
+
             .link {
                 width: 220px;
                 height: 330px;
             }
-            
+
             .apariencia {
                 width: 240px;
                 height: 360px;
                 top: 50%;
                 transform: translate(-50%, -50%);
             }
-            
+
             .amor { top: 20%; left: 10%; }
             .puerta { top: 20%; right: 10%; }
             .no-salgo { bottom: 10%; left: 10%; }
@@ -217,7 +218,6 @@
     <div class="container">
         <img src="cine.png" alt="Fondo" class="background" />
 
-        <!-- PORTADAS TÁCTILES -->
         <a href="billete.html" class="link billete">
             <img src="billeteportada.png" alt="Billete de Ida">
         </a>
@@ -244,19 +244,19 @@
                 link.addEventListener('touchstart', function(e) {
                     const touch = e.touches[0];
                     const indicator = document.querySelector('.touch-indicator');
-                    
+
                     indicator.style.display = 'block';
                     indicator.style.left = `${touch.clientX}px`;
                     indicator.style.top = `${touch.clientY}px`;
-                    
+
                     if (navigator.vibrate) navigator.vibrate(10);
                 });
-                
+
                 link.addEventListener('touchend', function() {
                     document.querySelector('.touch-indicator').style.display = 'none';
                 });
             });
-            
+
             // Bloquear zoom pero permitir scroll
             document.addEventListener('gesturestart', function(e) {
                 e.preventDefault();
@@ -266,7 +266,7 @@
             const touchIndicator = document.querySelector('.touch-indicator');
             if(touchIndicator) touchIndicator.remove();
         }
-        
+
         // Ajustar altura del contenedor en móvil
         function adjustContainerHeight() {
             const container = document.querySelector('.container');
@@ -276,7 +276,7 @@
                 container.style.height = '100vh';
             }
         }
-        
+
         window.addEventListener('resize', adjustContainerHeight);
         adjustContainerHeight();
 
