@@ -2,10 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>La Puerta</title>
   <style>
-    /* Reset y cuerpo */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -16,22 +21,13 @@
       background-size: cover;
       min-height: 100vh;
       overflow-x: hidden;
-      animation: fadeInBody 1.5s ease-out both;
+      font-family: Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
       cursor: none;
     }
 
-    @keyframes fadeInBody {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Líneas superior e inferior */
+    /* Líneas decorativas */
     .linea-superior,
     .linea-inferior {
       position: fixed;
@@ -40,29 +36,83 @@
       height: 4px;
       background: linear-gradient(90deg, #0066ff, #66aaff, #0066ff);
       box-shadow: 0 0 10px rgba(0, 102, 255, 0.8);
-      animation: glow 3s ease-in-out infinite;
       z-index: 5;
     }
 
-    .linea-superior {
+    .linea-superior { top: 0; }
+    .linea-inferior { bottom: 0; }
+
+    /* Menú hamburguesa */
+    .menu-toggle {
+      cursor: pointer;
+      width: 36px;
+      height: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 15px;
+      left: 10px;
+      z-index: 10000;
+    }
+
+    .menu-toggle div {
+      height: 6px;
+      background-color: #0000FF;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle.active div:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+      background-color: #fff;
+    }
+
+    .menu-toggle.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+      background-color: #fff;
+    }
+
+    /* Menú lateral */
+    .menu {
+      position: fixed;
       top: 0;
+      left: 0;
+      width: 220px;
+      height: 100vh;
+      background: rgba(0, 0, 255, 0.9);
+      padding-top: 60px;
+      box-sizing: border-box;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 9999;
     }
 
-    .linea-inferior {
-      bottom: 0;
+    .menu.active {
+      transform: translateX(0);
     }
 
-    @keyframes glow {
-      0%, 100% {
-        box-shadow: 0 0 10px rgba(0, 102, 255, 0.8);
-      }
-      50% {
-        box-shadow: 0 0 20px rgba(0, 102, 255, 1);
-      }
+    .menu a {
+      display: block;
+      padding: 12px 20px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(0, 102, 255, 0.5);
+      transition: all 0.2s ease;
+    }
+
+    .menu a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #aad4ff;
     }
 
     /* Video escritorio */
-    .video-container {
+    .video-escritorio {
       width: 22%;
       aspect-ratio: 1;
       position: fixed;
@@ -74,15 +124,30 @@
       z-index: 10;
     }
 
-    .video-container iframe {
+    .video-escritorio iframe {
       width: 100%;
       height: 100%;
       border: none;
     }
 
-    /* Video móvil - oculto por defecto */
+    /* Video móvil */
     .video-movil {
       display: none;
+      width: 90%;
+      max-width: 350px;
+      margin: 20px auto;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      z-index: 10;
+    }
+
+    .video-movil iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: none;
+      display: block;
     }
 
     /* Cursor personalizado */
@@ -95,106 +160,45 @@
       pointer-events: none;
       transform: translate(-50%, -50%);
       transition: all 0.1s ease;
-    }
-
-    /* Menú hamburguesa */
-    .menu-toggle {
-      position: fixed;
-      top: 16px;
-      left: 16px;
-      width: 30px;
-      height: 24px;
       z-index: 100;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
-    .menu-toggle span {
-      display: block;
+    /* Contenido principal */
+    .main-content {
+      flex: 1;
       width: 100%;
-      height: 4px;
-      background: white;
-      border-radius: 2px;
-      transition: 0.3s;
     }
 
-    /* Menú lateral */
-    nav {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 220px;
-      height: 100%;
-      background: #0000FF; /* Azul */
-      padding: 60px 20px 20px;
-      box-shadow: 2px 0 12px rgba(0, 0, 255, 0.5);
-      transition: left 0.3s ease;
-      z-index: 99;
-      font-family: Helvetica, sans-serif;
-    }
-
-    nav.open {
-      left: 0;
-    }
-
-    nav a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      margin-bottom: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      transition: color 0.2s;
-    }
-
-    nav a:hover {
-      color: #ccccff;
-    }
-
-    /* Estilos móviles */
+    /* Estilos para móvil */
     @media screen and (max-width: 768px) {
       body {
         background-image: url('lapuertavertical.png');
         background-size: contain;
         background-repeat: no-repeat;
-        background-attachment: scroll;
         background-position: center 40px;
         cursor: auto;
-        padding-bottom: 180px; /* espacio para video móvil */
+        padding-bottom: 180px;
       }
 
-      .linea-superior,
-      .linea-inferior {
-        display: none;
-      }
-
-      .video-container {
+      .video-escritorio {
         display: none;
       }
 
       .video-movil {
         display: block;
-        width: 85%;
-        max-width: 350px;
         position: fixed;
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 10;
-      }
-
-      .video-movil iframe {
-        width: 100%;
-        aspect-ratio: 16/9;
-        border: none;
-        border-radius: 8px;
-        box-shadow: 0 0 12px rgba(0,102,255,0.5);
       }
 
       .cursor {
         display: none;
+      }
+
+      .linea-superior,
+      .linea-inferior {
+        height: 3px;
       }
     }
 
@@ -206,7 +210,7 @@
       
       .video-movil {
         bottom: 15px;
-        width: 90%;
+        width: 95%;
       }
     }
   </style>
@@ -216,22 +220,25 @@
   <div class="linea-superior"></div>
   <div class="linea-inferior"></div>
 
-  <!-- Menú hamburguesa -->
+  <!-- Menú Hamburguesa -->
   <div class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" role="button" tabindex="0">
-    <span></span>
-    <span></span>
-    <span></span>
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
 
-  <!-- Navegación lateral -->
-  <nav id="menu">
-    <a href="index.html">INICIO</a>
-    <a href="cine.html">CINE</a>
-    <a href="carloscara.html">CARLOS CARA</a>
+  <!-- Menú lateral -->
+  <nav class="menu" id="menu">
+    <a href="index.html">Inicio</a>
+    <a href="cine.html">Cine</a>
+    <a href="carloscara.html">Carlos Cara</a>
   </nav>
 
+  <!-- Contenido principal -->
+  <div class="main-content"></div>
+
   <!-- Video escritorio -->
-  <div class="video-container">
+  <div class="video-escritorio">
     <iframe src="https://www.youtube.com/embed/m3PNmVMuSYM" allowfullscreen title="Video La Puerta"></iframe>
   </div>
 
@@ -248,24 +255,28 @@
     const menuToggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu');
 
-    // Toggle menú al click en hamburguesa
+    // Toggle menú
     menuToggle.addEventListener('click', () => {
-      menu.classList.toggle('open');
+      menu.classList.toggle('active');
+      menuToggle.classList.toggle('active');
     });
 
-    // Accesibilidad teclado (Enter o espacio)
+    // Accesibilidad teclado
     menuToggle.addEventListener('keydown', (e) => {
       if(e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        menu.classList.toggle('open');
+        menu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
       }
     });
 
-    // Cursor azul difuminado que sigue el ratón
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.left = `${e.clientX}px`;
-      cursor.style.top = `${e.clientY}px`;
-    });
+    // Cursor personalizado solo en escritorio
+    if (window.innerWidth > 768) {
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+      });
+    }
   </script>
 </body>
 </html>

@@ -21,11 +21,11 @@
     }
 
     body {
-      background-color: #000; /* Fondo negro para que la imagen ocupe toda la pantalla */
+      background-color: #000;
       background-image: url('amor-tizar mi tiempo.png');
       background-repeat: no-repeat;
       background-position: center center;
-      background-size: cover; /* Cambiado a cover para que ocupe toda la pantalla */
+      background-size: cover;
     }
 
     .linea-superior, .linea-inferior {
@@ -40,92 +40,84 @@
     .linea-superior { top: 0; }
     .linea-inferior { bottom: 0; }
 
-    /* Menú hamburguesa */
-    nav {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 10000;
-    }
-
+    /* Menú hamburguesa nuevo estilo */
     .menu-toggle {
-      width: 35px;
-      height: 30px;
       cursor: pointer;
-      position: relative;
+      width: 36px;
+      height: 26px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      z-index: 11001;
+      position: fixed;
+      top: 15px;
+      left: 10px;
+      z-index: 10000;
     }
 
-    .menu-toggle span {
-      display: block;
-      height: 4px;
+    .menu-toggle div {
+      height: 6px;
       background-color: #0000FF;
-      border-radius: 2px;
+      border-radius: 3px;
       transition: all 0.3s ease;
     }
 
-    .menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translate(7px, 7px);
-      background-color: white;
-    }
-    .menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-    .menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
-      background-color: white;
+    .menu-toggle.active div:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+      background-color: #fff;
     }
 
-    /* Panel menú deslizable */
+    .menu-toggle.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+      background-color: #fff;
+    }
+
     .menu {
       position: fixed;
       top: 0;
       left: 0;
+      width: 220px;
       height: 100vh;
-      width: 250px;
-      background-color: #0000FF;
-      padding: 60px 30px;
-      box-shadow: 2px 0 12px rgba(0, 0, 0, 0.5);
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
+      background: rgba(0, 0, 255, 0.85);
+      color: #e0f0ff;
+      padding-top: 60px;
+      box-sizing: border-box;
       transform: translateX(-100%);
       transition: transform 0.3s ease;
-      z-index: 11000;
-      user-select: none;
-      font-weight: 600;
-      font-size: 1.3rem;
-      color: white;
+      z-index: 9999;
     }
 
-    .menu.show {
+    .menu.active {
       transform: translateX(0);
     }
 
     .menu a {
-      color: white;
+      display: block;
+      padding: 12px 20px;
+      color: #e0f0ff;
       text-decoration: none;
-      transition: color 0.25s ease;
+      border-bottom: 1px solid #0033cc;
+      transition: background 0.2s ease;
+      font-family: 'Helvetica', sans-serif;
     }
 
     .menu a:hover {
-      color: #aaddff;
+      background: rgba(0, 102, 255, 0.3);
     }
 
-    /* Contenedor principal para empujar el video abajo */
     .main-content {
       flex: 1;
       width: 100%;
     }
 
-    /* Video - siempre abajo del todo */
+    /* Video abajo del todo */
     .video-abajo {
       width: 90vw;
-      max-width: 400px; /* Tamaño más pequeño para móvil */
-      aspect-ratio: 16 / 9;
+      max-width: 480px;
+      aspect-ratio: 16 / 7; /* MÁS ALTO Y CINEMÁTICO */
       border: 2px solid #0000FF;
       border-radius: 12px;
       box-shadow: 0 0 18px rgba(0, 0, 255, 0.9);
@@ -142,19 +134,20 @@
       display: block;
     }
 
-    /* Versión escritorio */
+    /* Escritorio */
     @media screen and (min-width: 769px) {
       .video-abajo {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        width: 380px;
+        width: 600px;
         max-width: none;
+        aspect-ratio: 16 / 7; /* MÁS ALTO EN ESCRITORIO */
         margin: 0;
       }
     }
 
-    /* Media queries móviles */
+    /* Móvil */
     @media screen and (max-width: 768px) {
       body {
         background-image: url('amortizarvertical.png');
@@ -162,12 +155,18 @@
       }
 
       .video-abajo {
-        max-width: 260px; /* Más pequeño en móvil */
+        max-width: 260px;
         margin-bottom: 60px;
+        aspect-ratio: 16 / 9;
       }
 
       .linea-superior, .linea-inferior {
         height: 2px;
+      }
+
+      .menu {
+        box-shadow: none !important;
+        border-left: none !important;
       }
     }
   </style>
@@ -177,42 +176,42 @@
   <div class="linea-superior"></div>
   <div class="linea-inferior"></div>
 
-  <!-- Menú hamburguesa -->
-  <nav>
-    <div class="menu-toggle" id="menuToggle" aria-label="Abrir menú" role="button" tabindex="0">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+  <!-- Menú Hamburguesa -->
+  <div class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" role="button" tabindex="0">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
 
-    <div class="menu" id="menu">
-      <a href="index.html">Inicio</a>
-      <a href="cine.html">Cine</a>
-      <a href="carloscara.html">Carlos Cara</a>
-    </div>
+  <!-- Menú lateral -->
+  <nav class="menu" id="menu">
+    <a href="index.html">Inicio</a>
+    <a href="cine.html">Cine</a>
+    <a href="carloscara.html">Carlos Cara</a>
   </nav>
 
-  <!-- Contenedor principal vacío para empujar el video abajo -->
+  <!-- Contenido principal -->
   <div class="main-content"></div>
 
-  <!-- Video abajo del todo -->
+  <!-- Video -->
   <div class="video-abajo">
-    <iframe src="https://www.youtube.com/embed/eVUI072l0tM" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/c8cgpQ2FAhQ" allowfullscreen></iframe>
   </div>
 
   <script>
-    const menuToggle = document.getElementById('menuToggle');
+    const menuToggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu');
 
     menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
       menuToggle.classList.toggle('active');
-      menu.classList.toggle('show');
     });
 
     menuToggle.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        menuToggle.click();
+        menu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
       }
     });
   </script>

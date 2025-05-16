@@ -70,7 +70,7 @@
       border: none;
     }
 
-    /* ==== MENÚ ==== */
+    /* ==== MENÚ CON HOVER FUNCIONAL ==== */
     .menu {
       position: fixed;
       top: 0;
@@ -92,15 +92,21 @@
 
     .menu a {
       display: block;
+      width: 100%;
       padding: 12px 20px;
-      color: #e0f0ff;
+      color: white;
       text-decoration: none;
       border-bottom: 1px solid #0033cc;
-      transition: background 0.2s ease;
+      transition: all 0.3s ease; /* Transición para todos los cambios */
+      box-sizing: border-box;
+      font-size: 18px;
+      font-weight: bold;
     }
 
     .menu a:hover {
-      background: rgba(0, 102, 255, 0.3);
+      color: #ccccff !important; /* Color hover similar a lapuerta.html */
+      background: transparent !important; /* Eliminamos el fondo en hover */
+      transform: translateX(5px); /* Pequeño desplazamiento */
     }
 
     .menu-toggle {
@@ -221,6 +227,5 @@
       }
     });
   </script>
-
 </body>
 </html>

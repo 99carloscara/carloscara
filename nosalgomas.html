@@ -3,31 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>La Puerta</title>
+  <title>No Salgo Más</title>
   <style>
-    /* Reset y base */
+    /* RESET y BODY */
     html, body {
       margin: 0;
       padding: 0;
       width: 100vw;
+      height: 100vh;
       overflow-x: hidden;
       box-sizing: border-box;
       cursor: none;
       font-family: 'Helvetica', sans-serif;
-      height: 100vh;
-      background-color: transparent;
-    }
-
-    body {
-      background-image: url('lapuerta.png'); /* Cambia a tu imagen */
+      background-image: url('nosalgo.png.jpg');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
       background-attachment: fixed;
-      overflow-x: hidden;
+
+      /* Safe area para eliminar bandas en iPhone 13 */
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+
+      margin-left: calc(-1 * env(safe-area-inset-left));
+      margin-right: calc(-1 * env(safe-area-inset-right));
+      margin-top: calc(-1 * env(safe-area-inset-top));
+      margin-bottom: calc(-1 * env(safe-area-inset-bottom));
+
+      animation: fadeInBody 1.5s ease-out both;
     }
 
-    /* Líneas superior e inferior */
+    @keyframes fadeInBody {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* LÍNEAS SUPERIOR E INFERIOR */
     .linea-superior,
     .linea-inferior {
       position: fixed;
@@ -42,62 +61,30 @@
     .linea-superior { top: 0; }
     .linea-inferior { bottom: 0; }
     @keyframes glow {
-      0%, 100% {
-        box-shadow: 0 0 10px rgba(0, 102, 255, 0.8);
-      }
-      50% {
-        box-shadow: 0 0 20px rgba(0, 102, 255, 1);
-      }
+      0%, 100% { box-shadow: 0 0 10px rgba(0, 102, 255, 0.8); }
+      50% { box-shadow: 0 0 20px rgba(0, 102, 255, 1); }
     }
 
-    /* Video web container */
+    /* VIDEO CONTENEDOR */
     .video-web-container {
-      width: 22%;
       position: fixed;
-      bottom: 10px;
+      bottom: 15px;
       right: 120px;
+      width: 30%;
+      max-width: 400px;
       z-index: 2;
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(0, 102, 255, 0.8);
-      transition: box-shadow 0.3s ease;
-      background: transparent;
-    }
-    .video-web-container:hover {
-      box-shadow: 0 0 25px rgba(0, 153, 255, 1);
-      background: rgba(0, 102, 255, 0.1);
+      box-sizing: border-box;
     }
     .video-web-container iframe {
       width: 100%;
-      height: 230px;
+      height: 280px;
       border: none;
       border-radius: 8px;
-      pointer-events: auto;
+      box-shadow: 0 0 10px rgba(0, 102, 255, 0.6);
+      transition: box-shadow 0.3s ease;
     }
-
-    /* Media queries móvil */
-    @media screen and (max-width: 768px) {
-      body {
-        background-image: url('lapuertavertical.png'); /* Cambia a tu imagen vertical */
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-attachment: scroll;
-      }
-      .linea-superior, .linea-inferior {
-        display: none;
-      }
-      .video-web-container {
-        width: 55%;
-        left: 50%;
-        bottom: 5px;
-        right: auto;
-        transform: translateX(-50%);
-        height: auto;
-        box-shadow: 0 0 10px rgba(0, 102, 255, 0.6);
-      }
-      .video-web-container iframe {
-        height: 160px;
-      }
+    .video-web-container iframe:hover {
+      box-shadow: 0 0 25px rgba(0, 153, 255, 0.9);
     }
 
     /* MENÚ LATERAL */
@@ -115,7 +102,6 @@
       transition: transform 0.3s ease;
       z-index: 9999;
       font-size: 18px;
-      font-family: 'Helvetica', sans-serif;
     }
     .menu.active {
       transform: translateX(0);
@@ -127,8 +113,6 @@
       text-decoration: none;
       border-bottom: 1px solid #0033cc;
       transition: background 0.2s ease;
-      font-weight: bold;
-      text-transform: uppercase;
     }
     .menu a:hover {
       background: rgba(0, 102, 255, 0.3);
@@ -165,7 +149,45 @@
       background-color: #fff;
     }
 
-    /* Cursor azul difuminado desktop */
+    /* MEDIA QUERY MÓVIL */
+    @media screen and (max-width: 768px) {
+      body {
+        background-image: url('nosalgovertical.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-position: center center;
+        cursor: auto;
+        background-color: transparent;
+
+        /* safe area para movil */
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+
+        margin-left: calc(-1 * env(safe-area-inset-left));
+        margin-right: calc(-1 * env(safe-area-inset-right));
+        margin-top: calc(-1 * env(safe-area-inset-top));
+        margin-bottom: calc(-1 * env(safe-area-inset-bottom));
+      }
+      .linea-superior, .linea-inferior {
+        display: none;
+      }
+      .video-web-container {
+        width: 60%;
+        bottom: 10px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        max-width: none;
+      }
+      .video-web-container iframe {
+        height: 180px;
+      }
+    }
+
+    /* Cursor azul difuminado para escritorio */
     @media (min-width: 769px) {
       body::before {
         content: '';
@@ -186,7 +208,6 @@
   </style>
 </head>
 <body>
-
   <!-- Menú hamburguesa -->
   <div class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" role="button" tabindex="0">
     <div></div>
@@ -194,6 +215,7 @@
     <div></div>
   </div>
 
+  <!-- Navegación lateral -->
   <nav class="menu" id="menu">
     <a href="index.html">Inicio</a>
     <a href="cine.html">Cine</a>
@@ -203,24 +225,28 @@
   <div class="linea-superior"></div>
   <div class="linea-inferior"></div>
 
-  <div class="video-web-container" title="Video YouTube">
-    <iframe
-      src="https://www.youtube.com/embed/m3PNmVMuSYM"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  <!-- Video incrustado -->
+  <div class="video-web-container">
+    <iframe 
+      src="https://www.youtube.com/embed/eVUI072l0tM" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
       allowfullscreen
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
+      title="Video No Salgo Más">
+    </iframe>
   </div>
 
   <script>
-    // Toggle menú hamburguesa
+    // Menú hamburguesa toggle
     const menuToggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('menu');
+
     menuToggle.addEventListener('click', () => {
       menu.classList.toggle('active');
       menuToggle.classList.toggle('active');
     });
+
+    // Soporte teclado para accesibilidad
     menuToggle.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -229,8 +255,9 @@
       }
     });
 
-    // Cursor personalizado azul difuminado para desktop
+    // Cursor azul difuminado seguimiento escritorio
     if (window.matchMedia("(min-width: 769px)").matches) {
+      document.body.style.setProperty('cursor', 'none');
       const halo = document.createElement('div');
       halo.style.position = 'fixed';
       halo.style.pointerEvents = 'none';
@@ -250,6 +277,5 @@
       });
     }
   </script>
-
 </body>
 </html>
