@@ -56,14 +56,14 @@
             left: 5%;
             right: 5%;
             width: 90%;
-            max-width: 180px;
+            max-width: 180px; /* Tamaño base pequeño */
             margin: 0 auto;
             background: rgba(0, 0, 0, 0.8);
             border-radius: 8px;
             overflow: hidden;
             z-index: 10;
             box-shadow: 0 0 10px rgba(0,102,255,0.6);
-            bottom: 2vh;
+            bottom: 2vh; /* Margen inferior base */
         }
 
         .video-movil iframe {
@@ -168,8 +168,8 @@
 
             .video-movil {
                 display: block;
-                max-width: 60%;
-                bottom: 2vh;
+                max-width: 60%; /* Ancho en general para móviles */
+                bottom: 3vh; /* Aumentamos el margen inferior en general */
             }
 
             .menu {
@@ -180,24 +180,24 @@
         /* Ajustes específicos para iPhone 13 en vertical */
         @media screen and (max-width: 428px) and (min-height: 800px) and (orientation: portrait) {
             .video-movil {
-                max-width: 40%;
-                bottom: 3vh;
+                max-width: 30%; /* ¡Aún más pequeño para iPhone 13! */
+                bottom: 4vh; /* Le damos aún más espacio desde abajo */
             }
         }
 
         /* Ajustes específicos para iPhone SE (todas las generaciones) */
         @media screen and (max-width: 375px) and (max-height: 667px) and (orientation: portrait) {
             .video-movil {
-                max-width: 35%;
-                bottom: 2.5vh;
+                max-width: 35%; /* Tamaño para iPhone SE */
+                bottom: 3vh; /* Margen para iPhone SE */
             }
         }
 
         /* Ajustes para pantallas aún más pequeñas */
         @media screen and (max-width: 320px) {
             .video-movil {
-                max-width: 50%;
-                bottom: 2vh;
+                max-width: 45%; /* Ajuste para pantallas muy estrechas */
+                bottom: 3vh; /* Ajuste del margen */
             }
         }
 
@@ -208,7 +208,7 @@
                 background-color: #000;
             }
             .video-movil {
-                bottom: 1.5vh;
+                bottom: 2vh; /* Ajuste del margen para pantallas bajas */
             }
         }
     </style>
